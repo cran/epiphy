@@ -12,11 +12,21 @@ fit_two_distr(data, ...)
 
 \method{fit_two_distr}{default}(data, random, aggregated, ...)
 
-\method{fit_two_distr}{count}(data, random = smle_pois,
-  aggregated = smle_nbinom, n_est = c(random = 1, aggregated = 2), ...)
+\method{fit_two_distr}{count}(
+  data,
+  random = smle_pois,
+  aggregated = smle_nbinom,
+  n_est = c(random = 1, aggregated = 2),
+  ...
+)
 
-\method{fit_two_distr}{incidence}(data, random = smle_binom,
-  aggregated = smle_betabinom, n_est = c(random = 1, aggregated = 2), ...)
+\method{fit_two_distr}{incidence}(
+  data,
+  random = smle_binom,
+  aggregated = smle_betabinom,
+  n_est = c(random = 1, aggregated = 2),
+  ...
+)
 }
 \arguments{
 \item{data}{An \code{intensity} object.}
@@ -112,5 +122,5 @@ lapply(my_agg_index, chisq.test)
 Madden LV, Hughes G. 1995. Plant disease incidence: Distributions,
 heterogeneity, and temporal analysis. Annual Review of Phytopathology 33(1):
 529–564.
-\href{http://dx.doi.org/doi:10.1146/annurev.py.33.090195.002525}{doi:10.1146/annurev.py.33.090195.002525}
+\doi{10.1146/annurev.py.33.090195.002525}
 }

@@ -10,8 +10,12 @@ z.test(x, ...)
 
 \method{z.test}{default}(x, ...)
 
-\method{z.test}{fisher}(x, alternative = c("two.sided", "less", "greater"),
-  conf.level = 0.95, ...)
+\method{z.test}{fisher}(
+  x,
+  alternative = c("two.sided", "less", "greater"),
+  conf.level = 0.95,
+  ...
+)
 }
 \arguments{
 \item{x}{The output of the \code{\link{agg_index}} function with
@@ -23,6 +27,10 @@ z.test(x, ...)
 It must be one of "two.sided" (default), "less" or "greater".}
 
 \item{conf.level}{The confidence level of the interval.}
+}
+\value{
+Same kind of object as the one returns by the stats
+\code{\link[stats]{chisq.test}} function for example.
 }
 \description{
 Performs z-tests for Fisher's aggregation indices (computed with either count

@@ -10,17 +10,49 @@
 \usage{
 mapcomp(data, ...)
 
-\method{mapcomp}{data.frame}(data, delta, bandwidth, nperm = 100,
-  edge_correction = FALSE, threads = 1, verbose = TRUE, ...)
+\method{mapcomp}{data.frame}(
+  data,
+  delta,
+  bandwidth,
+  nperm = 100,
+  edge_correction = FALSE,
+  threads = 1,
+  verbose = TRUE,
+  ...
+)
 
-\method{mapcomp}{matrix}(data, delta, bandwidth, nperm = 100,
-  edge_correction = FALSE, threads = 1, verbose = TRUE, ...)
+\method{mapcomp}{matrix}(
+  data,
+  delta,
+  bandwidth,
+  nperm = 100,
+  edge_correction = FALSE,
+  threads = 1,
+  verbose = TRUE,
+  ...
+)
 
-\method{mapcomp}{count}(data, delta, bandwidth, nperm = 100,
-  edge_correction = FALSE, threads = 1, verbose = TRUE, ...)
+\method{mapcomp}{count}(
+  data,
+  delta,
+  bandwidth,
+  nperm = 100,
+  edge_correction = FALSE,
+  threads = 1,
+  verbose = TRUE,
+  ...
+)
 
-\method{mapcomp}{incidence}(data, delta, bandwidth, nperm = 100,
-  edge_correction = FALSE, threads = 1, verbose = TRUE, ...)
+\method{mapcomp}{incidence}(
+  data,
+  delta,
+  bandwidth,
+  nperm = 100,
+  edge_correction = FALSE,
+  threads = 1,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{data}{A data frame or a matrix with only three columns: the two first
@@ -47,6 +79,17 @@ observation sites. FALSE by default.}
 \item{threads}{Number of threads to perform the computations.}
 
 \item{verbose}{Explain what is being done (TRUE by default).}
+}
+\value{
+An object of class \code{mapcomp}, which is a list containing the following
+components:
+\tabular{ll}{
+    \code{data}       \tab The input data. \cr
+    \code{coord}      \tab The coordinates and normalized intensity for each point of the full grid. \cr
+    \code{object}     \tab The class of \code{data}. \cr
+    \code{bandwidth}  \tab The \code{bandwidth} parameter. \cr
+    \code{stat, pval} \tab The statistic and corresponding p-value (see references for more details). \cr
+}
 }
 \description{
 \code{mapcomp} performs a spatial pattern analysis based on the calculation

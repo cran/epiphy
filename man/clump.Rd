@@ -7,8 +7,7 @@
 \usage{
 clump(object, ...)
 
-\method{clump}{intensity}(object, unit_size, fun = sum,
-  inclusive_unspecified = FALSE, ...)
+\method{clump}{intensity}(object, unit_size, fun = sum, inclusive_unspecified = FALSE, ...)
 }
 \arguments{
 \item{object}{An \code{intensity} object.}
@@ -28,6 +27,9 @@ throughout the data set.}
 variables (different from i and n) need to be included into the bigger
 possible sampling unit (TRUE) or splited into as many sampling units as
 possible (FALSE, default)?}
+}
+\value{
+An \code{\link{intensity}} object.
 }
 \description{
 This function provides a easy way to regroup recorded data into groups of

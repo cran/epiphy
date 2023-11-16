@@ -4,7 +4,8 @@
 \name{tomato_tswv}
 \alias{tomato_tswv}
 \title{Incidence of tomato spotted wilt virus (TSWV) disease in field trials.}
-\format{There are two data frames:
+\format{
+There are two data frames:
 
 \code{field_1928}: A data frame with 11088 rows and 8 variables:
 \tabular{rll}{
@@ -28,11 +29,12 @@
     [, 4]   \tab i   \tab Disease incidence. 0: Healthy, 1: Diseased. \cr
     [, 5]   \tab n   \tab Sampling unit size. n = 1 means that the sampling
                           unit size is the plant. \cr
-}}
+}
+}
 \source{
 Cochran WG. 1936. The statistical analysis of field counts of
     diseased plants. Supplement to the Journal of the Royal Statistical
-    Society 3, 49–67. \href{http://dx.doi.org/10.2307/2983677}{doi:10.2307/2983677}
+    Society 3, 49–67. \doi{10.2307/2983677}
 
 Bald JG. 1937. Investigations on "spotted wilt" of tomatoes. III.
     Infection in field plots. Bulletin 106. Melbourne, Australia: Council for

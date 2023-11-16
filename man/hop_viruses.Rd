@@ -4,21 +4,23 @@
 \name{hop_viruses}
 \alias{hop_viruses}
 \title{Incidence of three viruses in an Australian hop garden.}
-\format{There are three data frames, one for each virus (\code{HpLV}, \code{HpMV} and
+\format{
+There are three data frames, one for each virus (\code{HpLV}, \code{HpMV} and
 \code{ApMV}). Each data frame consists of 2550 rows and 7 variables:
 \tabular{lll}{
-    [, 1:2] \tab x,y   \tab Grid spatial coordonates. \cr
+    [, 1:2] \tab x,y   \tab Grid spatial coordinates. \cr
     [, 3:4] \tab xm,ym \tab Metric spatial coordinates. \cr
     [, 5]   \tab t     \tab Year of disease assessments. \cr
     [, 6]   \tab i     \tab Incidence. 0: Healthy, 1: Diseased. \cr
     [, 7]   \tab n     \tab Sampling unit size. n = 1 means that the sampling
                             unit size is the plant. \cr
-}}
+}
+}
 \source{
 Pethybridge SJ, Madden LV. 2003. Analysis of spatiotemporal dynamics
     of virus spread in an Australian hop garden by stochastic modeling. Plant
     Disease 87:56-62.
-    \href{http://dx.doi.org/10.1094/PDIS.2003.87.1.56}{doi:10.1094/PDIS.2003.87.1.56}
+    \doi{10.1094/PDIS.2003.87.1.56}
 }
 \usage{
 hop_viruses

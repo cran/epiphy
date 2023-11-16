@@ -28,6 +28,8 @@ NULL
 #' @param mapping A \code{mapping} object.
 #' @param keep_only_std Keep only standard variables.
 #'
+#' @returns A list of mapped names.
+#'
 #' @seealso \code{\link{mapped_var}}
 #'
 #' @examples
@@ -208,7 +210,8 @@ init_intensity <- function(data, mapping, keep_only_std, type) {
         mapping <- mapping_(paste0(data_std_names, "=", data_std_names))
         # checkings!!!
     } else {
-        if (class(mapping) != "mapping") stop("'mapping' must be a mapping object.")
+        if (isFALSE(inherits(mapping, class(mapping)))) stop("'mapping' must be a mapping object.",
+                                                                call. = FALSE)
         names_mapping <- names(mapping) ## Redondant avec plus bas
         if (!all(i_std <- names_mapping %in% unlist(std_names)) && keep_only_std) { # TODO: What? keep_only_std here?
             #warning("Dropping unrelevant names in mapping.") # NOT CLEAR
@@ -334,7 +337,7 @@ init_intensity <- function(data, mapping, keep_only_std, type) {
 #'   Setting \code{keep_only_std} to TRUE may be useful for subsequent data splitting
 #'   using extra labels.
 #'
-#' @return An \code{incidence} object.
+#' @return An \code{intensity} object.
 #'
 #' When printed, difference information are available:
 #'
@@ -455,6 +458,9 @@ severity_data <- function(data, mapping, keep_only_std = TRUE) {
 #'
 #' @param x An object.
 #'
+#' @returns TRUE if its argument's value is the corresponding \code{intensity}
+#'     object and FALSE otherwise.
+#'
 #' @export
 #------------------------------------------------------------------------------#
 is.intensity <- function(x) return(is(x, "intensity"))
@@ -530,7 +536,7 @@ summary.intensity <- function(object, ...) summary(object$data)
 #' @export
 #------------------------------------------------------------------------------#
 as.data.frame.intensity <- function(x, row.names = NULL, optional = FALSE, ...,
-                                    stringsAsFactors = default.stringsAsFactors()) {
+                                    stringsAsFactors = FALSE) {
     # To keep the standard behavior of as.data.frame(), we need to coerce
     # the input data frame to a "simple" list.
     as.data.frame(as.list(x$data), row.names = row.names, optional = optional,
@@ -546,6 +552,10 @@ as.data.frame.intensity <- function(x, row.names = NULL, optional = FALSE, ...,
 #' @param value A \code{mapping} object.
 #' @param keep Logical. Do we keep any previous mapped variables that are not
 #'     redifined in the \code{mapping} object?
+#'
+#' @returns
+#' \code{mapped_var} returns the list of current mapped names of the object
+#' \code{x}.
 #'
 #' @seealso \code{\link{mapping}}
 #'
@@ -589,25 +599,6 @@ mapped_var <- function(x) {
 dim.intensity <- function(x) lengths(x$struct)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #==============================================================================#
 # Advanced manipulations of "intensity" objects
 #==============================================================================#
@@ -632,6 +623,8 @@ dim.intensity <- function(x) lengths(x$struct)
 #'     possible sampling unit (TRUE) or splited into as many sampling units as
 #'     possible (FALSE, default)?
 #' @param ... Additional arguments to be passed to \code{fun}.
+#'
+#' @return An \code{\link{intensity}} object.
 #'
 #' @examples
 #' my_incidence <- incidence(tomato_tswv$field_1929)
@@ -752,10 +745,13 @@ clump.intensity <- function(object, unit_size, fun = sum,
 #'     ones) will be dropped so that clumps of individuals remain even
 #'     throughout the data set.
 #'
-# @examples
-# #inc_spl_t <- split(inc_clu, by = "t")
-# #inc_spl_tbis <- split(inc_clu, unit_size = c(x = 8, y = 20, t = 1))
-# #identical(unname(inc_spl_t), unname(inc_spl_tbis))
+#' @return A list of \code{\link{intensity}} objects.
+#'
+#' @examples
+#' my_incidence <- incidence(tomato_tswv$field_1929)
+#' plot(my_incidence, type = "all")
+#' my_incidence_spl1 <- split(my_incidence, by = "t")
+#' my_incidence_spl2 <- split(my_incidence, unit_size = c(x = 8, y = 20, t = 1))
 #'
 #' @export
 #------------------------------------------------------------------------------#
@@ -863,10 +859,20 @@ split.intensity <- function(x, f, drop = FALSE, ..., by, unit_size) {
 #' diseased individual at all was found within the sampling unit, or "diseased"
 #' (1) if at least one diseased individual was found.
 #'
-#' @param data A numeric vector or an \code{intensity} object.
+#' @param data A numeric vector or an \code{\link{intensity}} object.
 #' @param value All the intensity values lower or equal to this value  are set
 #'     to 0. The other values are set to 1.
 #' @param ... Additional arguments to be passed to other methods.
+#'
+#' @return A numeric vector or an \code{\link{intensity}} object.
+#'
+#' @examples
+#' my_incidence <- incidence(tomato_tswv$field_1929)
+#' plot(my_incidence, type = "all")
+#' my_incidence_clumped_1 <- clump(my_incidence, unit_size = c(x = 3, y = 3))
+#' plot(my_incidence_clumped_1, type = "all")
+#' my_incidence_thr <- threshold(my_incidence_clumped_1, value = 4)
+#' plot(my_incidence_thr, type = "all")
 #'
 #' @export
 #------------------------------------------------------------------------------#
@@ -978,7 +984,7 @@ plot.intensity <- function(x, y, ..., type = c("spatial", "temporal", "all"),
         gg <- gg + geom_jitter(data = mapped_data, mapping = aes(t, i),
                                alpha = 0.2, width = 0.2, height = 0)
         gg <- gg + stat_summary(data = mapped_data, mapping = aes(t, i),
-                                fun.y = "mean", geom = "line", color = color_high,
+                                fun = "mean", geom = "line", color = color_high,
                                 linetype = "dashed")
         gg <- gg + stat_summary(data = mapped_data,
                                 mapping = aes(t, i, group = t),
@@ -1035,7 +1041,3 @@ plot.intensity <- function(x, y, ..., type = c("spatial", "temporal", "all"),
     invisible(NULL)
 
 }
-
-
-
-

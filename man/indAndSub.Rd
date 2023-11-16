@@ -13,12 +13,12 @@ sub2ind(sub, .dim)
 \arguments{
 \item{ind}{Vector indices.}
 
-\item{.dim}{\code{\link{dim}(.)} integer vector}
+\item{.dim}{\code{\link[base]{dim}(.)} integer vector}
 
-\item{.dimnames}{optional list of character \code{\link{dimnames}(.)}.
+\item{.dimnames}{optional list of character \code{\link[base]{dimnames}(.)}.
    If \code{useNames} is true, to be used for constructing dimnames for
    \code{arrayInd()} (and hence, \code{which(*, arr.ind=TRUE)}).
-   If \code{\link{names}(.dimnames)} is not empty, these are used as
+   If \code{\link[base]{names}(.dimnames)} is not empty, these are used as
    column names.  \code{.dimnames[[1]]} is used as row names.}
 
 \item{useNames}{logical indicating if the value of \code{arrayInd()}
@@ -26,11 +26,12 @@ sub2ind(sub, .dim)
 
 \item{sub}{Array/matrix indices.}
 }
-\description{
-\code{ind2sub} is a synonym for \code{\link[base]{arrayInd}} in \code{base} package.
+\value{
+See \code{\link[base]{arrayInd}}.
 }
-\details{
-\code{ind2sub} is just an alias for \code{\link[base]{arrayInd}}
+\description{
+\code{ind2sub} is just an alias for \code{\link[base]{arrayInd}}.
+\code{sub2ind} is the reverse of \code{ind2sub}.
 }
 \examples{
 set.seed(12345)

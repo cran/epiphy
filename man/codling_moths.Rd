@@ -4,16 +4,18 @@
 \name{codling_moths}
 \alias{codling_moths}
 \title{Count of codling moth larvae.}
-\format{A data frame with 30 rows and 3 variables:
+\format{
+A data frame with 30 rows and 3 variables:
 \tabular{lll}{
     [, 1:2] \tab x,y \tab Metric spatial coordonates. \cr
     [, 3]   \tab i   \tab Counts of codling moth larvae. \cr
-}}
+}
+}
 \source{
 Lavigne C, Ricci B, Franck P, Senoussi R. 2010. Spatial analyses of
     ecological count data: A density map comparison approach. Basic and
     Applied Ecology 11: 734-42.
-    \href{http://dx.doi.org/10.1016/j.baae.2010.08.011}{doi:10.1016/j.baae.2010.08.011}
+    \doi{10.1016/j.baae.2010.08.011}
 }
 \usage{
 codling_moths

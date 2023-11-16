@@ -4,8 +4,13 @@
 \alias{agg_index}
 \title{Several aggregation indices.}
 \usage{
-agg_index(x, method = c("fisher", "lloyd", "morisita"), flavor = c("count",
-  "incidence"), n = NULL, ...)
+agg_index(
+  x,
+  method = c("fisher", "lloyd", "morisita"),
+  flavor = c("count", "incidence"),
+  n = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A numeric vector or a \code{count}/\code{incidence} object.}
@@ -22,6 +27,17 @@ Note that current implementation only deals with equal size sampling
 units.}
 
 \item{...}{Additional arguments to be passed to other methods.}
+}
+\value{
+An object of class \code{agg_index}, which is a list containing the following
+components:
+\tabular{ll}{
+    \code{index}  \tab The value of the index. \cr
+    \code{name}   \tab The name of the index. \cr
+    \code{flavor} \tab The flavor of the calculated index ("count" or "incidence"). \cr
+    \code{N}      \tab The number of sampling units. \cr
+    \code{n}      \tab The number of individuals in each sampling unit (if relevant). \cr
+}
 }
 \description{
 This function can compute different aggregation indices. See "Details"
@@ -98,12 +114,12 @@ Lloyd M. 1967. Mean crowding. The Journal of Animal Ecology 36, 1–30.
 
 Morisita M. 1962. I\eqn{\delta}-Index, a measure of dispersion of
 individuals. Researches on Population Ecology 4, 1–7.
-\href{http://dx.doi.org/doi:10.1007/BF02533903}{doi:10.1007/BF02533903}
+\doi{10.1007/BF02533903}
 
 Madden LV, Hughes G. 1995. Plant disease incidence: Distributions,
 heterogeneity, and temporal analysis. Annual Review of Phytopathology 33(1):
 529–564.
-\href{http://dx.doi.org/doi:10.1146/annurev.py.33.090195.002525}{doi:10.1146/annurev.py.33.090195.002525}
+\doi{10.1146/annurev.py.33.090195.002525}
 }
 \seealso{
 \code{\link[vegan]{vegdist}} in \strong{vegan} package.

@@ -25,19 +25,21 @@
 #' @param verbose Explain what is being done (TRUE by default).
 #' @param ... Additional arguments to be passed to other methods.
 #'
+#' @returns A \code{sadie} object.
+#'
 #' @references
 #'
 #' Perry JN. 1995. Spatial analysis by distance indices. Journal of Animal
-#' Ecology 64, 303–314. \href{http://dx.doi.org/10.2307/5892}{doi:10.2307/5892}
+#' Ecology 64, 303–314. \doi{10.2307/5892}
 #'
 #' Perry JN, Winder L, Holland JM, Alston RD. 1999. Red–blue plots for detecting
 #' clusters in count data. Ecology Letters 2, 106–113.
-#' \href{http://dx.doi.org/10.1046/j.1461-0248.1999.22057.x}{doi:10.1046/j.1461-0248.1999.22057.x}
+#' \doi{10.1046/j.1461-0248.1999.22057.x}
 #'
 #' Li B, Madden LV, Xu X. 2012. Spatial analysis by distance indices: an
 #' alternative local clustering index for studying spatial patterns. Methods in
 #' Ecology and Evolution 3, 368–377.
-#' \href{http://dx.doi.org/10.1111/j.2041-210X.2011.00165.x}{doi:10.1111/j.2041-210X.2011.00165.x}
+#' \doi{10.1111/j.2041-210X.2011.00165.x}
 #'
 #' @examples
 #' set.seed(123)
@@ -382,7 +384,8 @@ wrap_transport <- function(start, end, cost, method = "shortsimplex",
 #------------------------------------------------------------------------------#
 #' @method as.matrix transport
 #------------------------------------------------------------------------------#
-as.matrix.transport <- function(x, dim_mat) {
+as.matrix.transport <- function(x, ...) {
+    dim_mat <- list(...)[[1]]
     as_matrix_transport(x, dim_mat)
 }
 

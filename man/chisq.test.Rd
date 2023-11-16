@@ -20,6 +20,10 @@ case, stats::\code{\link[stats]{chisq.test}} is called.}
 \item{...}{Further arguments to be passed to
 stats::\code{\link[stats]{chisq.test}}.}
 }
+\value{
+Same kind of object as the one returns by the stats
+\code{\link[stats]{chisq.test}} function.
+}
 \description{
 Performs chi-squared tests for Fisher's aggregation indices (computed with
 either count or incidence data). If another kind of data is provided, the R
@@ -43,7 +47,7 @@ For count and incidence data:
 Madden LV, Hughes G. 1995. Plant disease incidence: Distributions,
 heterogeneity, and temporal analysis. Annual Review of Phytopathology 33(1):
 529–564.
-\href{http://dx.doi.org/doi:10.1146/annurev.py.33.090195.002525}{doi:10.1146/annurev.py.33.090195.002525}
+\doi{10.1146/annurev.py.33.090195.002525}
 
 Patil GP, Stiteler WM. 1973. Concepts of aggregation and their
 quantification: a critical review with some new results and applications.

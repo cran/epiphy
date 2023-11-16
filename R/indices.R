@@ -62,6 +62,17 @@ NULL
 #'     units.
 #' @param ... Additional arguments to be passed to other methods.
 #'
+#' @returns
+#' An object of class \code{agg_index}, which is a list containing the following
+#' components:
+#' \tabular{ll}{
+#'     \code{index}  \tab The value of the index. \cr
+#'     \code{name}   \tab The name of the index. \cr
+#'     \code{flavor} \tab The flavor of the calculated index ("count" or "incidence"). \cr
+#'     \code{N}      \tab The number of sampling units. \cr
+#'     \code{n}      \tab The number of individuals in each sampling unit (if relevant). \cr
+#' }
+#'
 #' @examples
 #' # Count flavor of Fisher's index:
 #' my_fisher_count <- agg_index(aphids$i)
@@ -96,12 +107,12 @@ NULL
 #'
 #' Morisita M. 1962. I\eqn{\delta}-Index, a measure of dispersion of
 #' individuals. Researches on Population Ecology 4, 1–7.
-#' \href{http://dx.doi.org/doi:10.1007/BF02533903}{doi:10.1007/BF02533903}
+#' \doi{10.1007/BF02533903}
 #'
 #' Madden LV, Hughes G. 1995. Plant disease incidence: Distributions,
 #' heterogeneity, and temporal analysis. Annual Review of Phytopathology 33(1):
 #' 529–564.
-#' \href{http://dx.doi.org/doi:10.1146/annurev.py.33.090195.002525}{doi:10.1146/annurev.py.33.090195.002525}
+#' \doi{10.1146/annurev.py.33.090195.002525}
 #'
 #' @export
 #------------------------------------------------------------------------------#
@@ -141,7 +152,7 @@ fisher.default <- function(x, flavor = c("count", "incidence"), n = NULL, ...) {
     call <- match.call() # TODO: Not yet used.
     stopifnot(is.numeric(x))
     flavor <- match.arg(flavor)
-    if (!is.null(n) && !is.na(n)) {
+    if (!is.null(n) && !any(is.na(n))) {
         # Force "incidence" flavor if n is provided.
         flavor <- "incidence"
     }
@@ -154,12 +165,14 @@ fisher.default <- function(x, flavor = c("count", "incidence"), n = NULL, ...) {
             res <- v / m
         },
         "incidence" = {
-            stopifnot(!is.null(n) && !is.na(n))
+            stopifnot(!is.null(n) && !any(is.na(n)))
             n <- unique(n)
-            if (length(n) != 1) stop(paste0("Current implementation only deals ",
-                                            "with equal size sampling units."))
-            if (!(n > 1)) stop(paste0("The number of individuals per sampling ",
-                                      " unit ('n') must be > 1."))
+            if (length(n) != 1) stop("Current implementation only deals ",
+                                       "with equal size sampling units.",
+                                     call. = FALSE)
+            if (!(n > 1)) stop("The number of individuals per sampling ",
+                                " unit ('n') must be > 1.",
+                               call. = FALSE)
             stopifnot(all(x <= n))
             m <- mean(x / n)
             v <- var(x / n)
@@ -239,7 +252,7 @@ morisita.default <- function(x, flavor = c("count", "incidence"), n = NULL, ...)
     call <- match.call() # TODO: Not yet used.
     stopifnot(is.numeric(x))
     flavor <- match.arg(flavor)
-    if (!is.null(n) && !is.na(n)) {
+    if (!is.null(n) && !any(is.na(n))) {
         # Force "incidence" flavor if n is provided.
         flavor <- "incidence"
     }
@@ -247,17 +260,19 @@ morisita.default <- function(x, flavor = c("count", "incidence"), n = NULL, ...)
     N <- length(x) # Number of sampling units.
     tot <- sum(x)  # Total number of individuals over all the sampling units.
     res <- N * sum(x * (x - 1)) / (tot * (tot - 1))
-    switch (flavor,
+    switch(flavor,
             "count" = {
                 # Do no more calculation.
             },
             "incidence" = {
-                stopifnot(!is.null(n) && !is.na(n))
+                stopifnot(!is.null(n) && !any(is.na(n)))
                 n <- unique(n)
-                if (length(n) != 1) stop(paste0("Current implementation only deals ",
-                                                "with equal size sampling units."))
-                if (!(n > 1)) stop(paste0("The number of individuals per sampling ",
-                                          " unit ('n') must be > 1."))
+                if (length(n) != 1) stop("Current implementation only deals ",
+                                         "with equal size sampling units.",
+                                         call. = FALSE)
+                if (!(n > 1)) stop("The number of individuals per sampling ",
+                                   " unit ('n') must be > 1.",
+                                   call. = FALSE)
                 stopifnot(all(x <= n))
                 res <- res * (n - 1/N) / (n - 1)
             }
@@ -303,6 +318,10 @@ morisita.incidence <- function(x, ...) {
 #' @param ... Further arguments to be passed to
 #'     stats::\code{\link[stats]{chisq.test}}.
 #'
+#' @returns
+#' Same kind of object as the one returns by the stats
+#' \code{\link[stats]{chisq.test}} function.
+#'
 #' @examples
 #' # For incidence data:
 #' my_incidence <- incidence(tobacco_viruses)
@@ -318,7 +337,7 @@ morisita.incidence <- function(x, ...) {
 #' Madden LV, Hughes G. 1995. Plant disease incidence: Distributions,
 #' heterogeneity, and temporal analysis. Annual Review of Phytopathology 33(1):
 #' 529–564.
-#' \href{http://dx.doi.org/doi:10.1146/annurev.py.33.090195.002525}{doi:10.1146/annurev.py.33.090195.002525}
+#' \doi{10.1146/annurev.py.33.090195.002525}
 #'
 #' Patil GP, Stiteler WM. 1973. Concepts of aggregation and their
 #' quantification: a critical review with some new results and applications.
@@ -378,6 +397,10 @@ chisq.test.fisher <- function(x, ...) {
 #' @param conf.level The confidence level of the interval.
 #' @param ... Not yet implemented.
 #'
+#' @returns
+#' Same kind of object as the one returns by the stats
+#' \code{\link[stats]{chisq.test}} function for example.
+#'
 #' @examples
 #' # For incidence data:
 #' my_incidence <- incidence(tobacco_viruses)
@@ -414,7 +437,8 @@ z.test.default <- function(x, ...) {
     #          call. = FALSE)
     # }
     # snse::z.test(x, ...)
-    stop("No method implemented for this kind of data.")
+    stop("No method implemented for this kind of data.",
+         call. = FALSE)
 }
 
 #------------------------------------------------------------------------------#
@@ -499,6 +523,10 @@ z.test.fisher <- function(x, alternative = c("two.sided", "less", "greater"),
 #'     \code{method = "fisher"} as parameter.
 #' @param ... Not yet implemented.
 #'
+#' @returns
+#' Same kind of object as the one returns by the stats
+#' \code{\link[stats]{chisq.test}} function for example.
+#'
 #' @examples
 #' # For incidence data:
 #' my_incidence <- incidence(tobacco_viruses)
@@ -530,7 +558,8 @@ calpha.test.fisher <- function(x, ...) {
     N     <- x[["N"]]
     switch (x[["flavor"]],
             "count" = {
-                stop("No calpha.test for count data.")
+                stop("No calpha.test for count data.",
+                     call. = FALSE)
             },
             "incidence" = {
                 n <- x[["n"]]
@@ -552,8 +581,3 @@ calpha.test.fisher <- function(x, ...) {
     ), class = "htest")
 
 }
-
-
-
-
-
